@@ -22,6 +22,9 @@ def register_extensions(app):
     global redis_client
     redis_client = StrictRedis(host=app.config['REDIS_HOST'], port=app.config['REDIS_PORT'])
 
+    #装饰器添加
+    from utils.converters import register_converters
+    register_converters(app)
 
 def create_flask_app(type):
     """创建flask应用"""
