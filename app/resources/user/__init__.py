@@ -1,9 +1,11 @@
 from flask import Blueprint
 from flask_restful import Api
+
+from utils.constants import BASE_URL_PRIFIX
 from .passport import SMSCodeResource
 
 # 创建蓝图对象
-user_bp = Blueprint('user', __name__)
+user_bp = Blueprint('user', __name__,url_prefix=BASE_URL_PRIFIX)
 
 # 创建Api对象
 user_api = Api(user_bp)
