@@ -52,7 +52,8 @@ def register_bp(app: Flask):
     from app.resources.user import user_bp  # 进行局部导入, 避免组件没有初始化完成
     app.register_blueprint(user_bp)
 
-
+    from app.resources.article import article_bp
+    app.register_blueprint(article_bp)
 def create_app(type):
     """创建应用 和 组件初始化"""
 
