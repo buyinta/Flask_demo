@@ -9,6 +9,10 @@ class DefaultConfig:
     REDIS_HOST = '127.0.0.1'  # ip
     REDIS_PORT = 6381  # 端口
 
+    # JWT
+    JWT_SECRET = 'TPmi4aLWRbyVq8zu9v82dWYW17/z+UvRnYTt4P6fAXA'  # 秘钥
+    JWT_EXPIRE_DAYS = 14  # JWT过期时间
+
 config_dict = {
     'dev': DefaultConfig
 }
