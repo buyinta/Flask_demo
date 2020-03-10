@@ -1,5 +1,7 @@
 from flask import Blueprint
 from flask_restful import Api
+
+from app.resources.article.articles import ArticleListResource
 from utils.constants import BASE_URL_PRIFIX
 
 # 1、创建蓝图对象
@@ -19,3 +21,4 @@ from .channel import AllChannelResource
 
 # 添加类视图
 article_api.add_resource(AllChannelResource, '/channels')
+article_api.add_resource(ArticleListResource, '/articles')
