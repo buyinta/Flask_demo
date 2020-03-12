@@ -19,17 +19,27 @@ class CommentsResource(Resource):
         parser = RequestParser()
         parser.add_argument('target', required=True, location='json', type=int)
         parser.add_argument('content', required=True, location='json', type=regex(r'.+'))
+        parser.add_argument('parent_id', location='json', type=int)
         args = parser.parse_args()
         target = args.target
         content = args.content
+        parent_id = args.parent_id
 
-        # 生成评论记录
-        comment = Comment(user_id=userid, article_id=target, content=content, parent_id=0)
+        # 先判断是普通评论还是回复评论
+        if parent_id:
+            comment = Comment(user_id=userid, article_id=target, content=content, parent_id=parent_id)
+            db.session.add(comment)
 
-        db.session.add(comment)
+            # 让文章的评论数加1
+            Comment.query.filter(Comment.id == parent_id).update({'reply_count': Comment.reply_count + 1})
+        else:
+            # 生成评论记录
+            comment = Comment(user_id=userid, article_id=target, content=content, parent_id=0)
 
-        # 文章的评论数量加一
-        Article.query.filter(Article.id == target).update({'comment_count': Article.comment_count + 1})
+            db.session.add(comment)
+
+            # 文章的评论数量加一
+            Article.query.filter(Article.id == target).update({'comment_count': Article.comment_count + 1})
 
         db.session.commit()
 
